@@ -1,0 +1,17 @@
+[package]
+name = "axum-test-helper"
+version = "0.7.0"
+edition = "2021"
+description = "Test helpers for axum"
+license = "MIT"
+
+[dependencies]
+axum = "0.7"
+bytes = "1.6"
+futures-util = "0.3"
+http = "1.1"
+reqwest = { version = "0.12", features = ["json", "multipart"] }
+serde = "1.0"
+tokio = "1"
+tower = "0.4"
+tower-service = "0.3"

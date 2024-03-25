@@ -81,6 +81,13 @@ impl TestClient {
     }
 
     #[must_use]
+    pub fn delete(&self, url: &str) -> RequestBuilder {
+        RequestBuilder {
+            builder: self.client.delete(format!("http://{}{}", self.addr, url)),
+        }
+    }
+
+    #[must_use]
     pub fn patch(&self, url: &str) -> RequestBuilder {
         RequestBuilder {
             builder: self.client.patch(format!("http://{}{}", self.addr, url)),
@@ -161,7 +168,7 @@ impl TestResponse {
     {
         self.response.json().await.unwrap()
     }
-    
+
     pub fn status(&self) -> StatusCode {
         self.response.status()
     }

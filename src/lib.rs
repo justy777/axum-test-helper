@@ -55,43 +55,48 @@ impl TestClient {
     #[must_use]
     pub fn get(&self, url: &str) -> RequestBuilder {
         RequestBuilder {
-            builder: self.client.get(format!("http://{}{}", self.addr, url)),
+            builder: self.client.get(format!("http://{}{url}", self.addr)),
         }
     }
 
     #[must_use]
     pub fn head(&self, url: &str) -> RequestBuilder {
         RequestBuilder {
-            builder: self.client.head(format!("http://{}{}", self.addr, url)),
+            builder: self.client.head(format!("http://{}{url}", self.addr)),
         }
     }
 
     #[must_use]
     pub fn post(&self, url: &str) -> RequestBuilder {
         RequestBuilder {
-            builder: self.client.post(format!("http://{}{}", self.addr, url)),
+            builder: self.client.post(format!("http://{}{url}", self.addr)),
         }
     }
 
     #[must_use]
     pub fn put(&self, url: &str) -> RequestBuilder {
         RequestBuilder {
-            builder: self.client.put(format!("http://{}{}", self.addr, url)),
+            builder: self.client.put(format!("http://{}{url}", self.addr)),
         }
     }
 
     #[must_use]
     pub fn delete(&self, url: &str) -> RequestBuilder {
         RequestBuilder {
-            builder: self.client.delete(format!("http://{}{}", self.addr, url)),
+            builder: self.client.delete(format!("http://{}{url}", self.addr)),
         }
     }
 
     #[must_use]
     pub fn patch(&self, url: &str) -> RequestBuilder {
         RequestBuilder {
-            builder: self.client.patch(format!("http://{}{}", self.addr, url)),
+            builder: self.client.patch(format!("http://{}{url}", self.addr)),
         }
+    }
+
+    #[must_use]
+    pub const fn server_port(&self) -> u16 {
+        self.addr.port()
     }
 }
 
@@ -175,8 +180,8 @@ impl TestResponse {
     }
 
     #[must_use]
-    pub fn headers(&self) -> &http::HeaderMap {
-        self.response.headers()
+    pub fn headers(&self) -> http::HeaderMap {
+        self.response.headers().clone()
     }
 
     pub async fn chunk(&mut self) -> Option<Bytes> {

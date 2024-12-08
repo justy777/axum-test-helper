@@ -49,7 +49,7 @@ impl TestClient {
             .build()
             .unwrap();
 
-        TestClient { client, addr }
+        Self { client, addr }
     }
 
     #[must_use]
@@ -169,10 +169,12 @@ impl TestResponse {
         self.response.json().await.unwrap()
     }
 
+    #[must_use]
     pub fn status(&self) -> StatusCode {
         self.response.status()
     }
 
+    #[must_use]
     pub fn headers(&self) -> &http::HeaderMap {
         self.response.headers()
     }

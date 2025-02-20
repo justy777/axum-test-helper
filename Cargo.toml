@@ -1,13 +1,13 @@
 [package]
 name = "axum-test-helper"
-version = "0.7.0"
-edition = "2021"
+version = "0.8.1"
+edition = "2024"
 description = "Test helpers for axum"
 license = "MIT"
 
 [dependencies]
-axum = "0.7"
-bytes = "1.9"
+axum = "0.8.1"
+bytes = "1.10"
 futures-util = "0.3"
 http = "1.2"
 reqwest = { version = "0.12", features = ["json", "multipart"] }

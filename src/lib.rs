@@ -2,8 +2,8 @@ use axum::{extract::Request, response::Response, serve};
 use bytes::Bytes;
 use futures_util::future::BoxFuture;
 use http::{
-    header::{HeaderName, HeaderValue},
     StatusCode,
+    header::{HeaderName, HeaderValue},
 };
 use std::{convert::Infallible, future::IntoFuture, net::SocketAddr};
 use tokio::net::TcpListener;

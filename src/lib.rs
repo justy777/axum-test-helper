@@ -1,11 +1,10 @@
 use axum::{extract::Request, response::Response, serve};
 use bytes::Bytes;
-use futures_util::future::BoxFuture;
-use http::{
-    StatusCode,
-    header::{HeaderName, HeaderValue},
-};
+use futures_core::future::BoxFuture;
+use http::StatusCode;
+use http::header::{HeaderName, HeaderValue};
 use std::{convert::Infallible, future::IntoFuture, net::SocketAddr};
+use std::ops::Deref;
 use tokio::net::TcpListener;
 use tower::make::Shared;
 use tower_service::Service;
@@ -129,7 +128,6 @@ impl RequestBuilder {
         <HeaderValue as TryFrom<V>>::Error: Into<http::Error>,
     {
         self.builder = self.builder.header(key, value);
-
         self
     }
 
@@ -158,6 +156,14 @@ pub struct TestResponse {
     response: reqwest::Response,
 }
 
+impl Deref for TestResponse {
+    type Target = reqwest::Response;
+
+    fn deref(&self) -> &Self::Target {
+        &self.response
+    }
+}
+
 impl TestResponse {
     pub async fn bytes(self) -> Bytes {
         self.response.bytes().await.unwrap()
@@ -172,16 +178,6 @@ impl TestResponse {
         T: serde::de::DeserializeOwned,
     {
         self.response.json().await.unwrap()
-    }
-
-    #[must_use]
-    pub fn status(&self) -> StatusCode {
-        self.response.status()
-    }
-
-    #[must_use]
-    pub fn headers(&self) -> http::HeaderMap {
-        self.response.headers().clone()
     }
 
     pub async fn chunk(&mut self) -> Option<Bytes> {
